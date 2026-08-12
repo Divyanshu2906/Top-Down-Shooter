@@ -170,3 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   MoveSpeed: 20
+  BulletLiftime: 3
+  Impacteffectprefab: {fileID: 9142146071295838133, guid: cb4f74d2b138b7c4dbd7e54c441cbf44, type: 3}
+  damage: 25
