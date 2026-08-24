@@ -65,6 +65,7 @@ public class Weapon : MonoBehaviour
                 {
                     Debug.Log("No Ammo");
                     
+                    
                 }
             }
         }
