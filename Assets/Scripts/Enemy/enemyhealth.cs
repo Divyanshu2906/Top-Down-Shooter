@@ -7,11 +7,13 @@ public class Health : MonoBehaviour
     int CurrentHealth;
     Animator animator;
     public bool isdead;
+    EnemyMovement enemyMovement;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         audiosources = GetComponents<AudioSource>();
+        enemyMovement = GetComponent<EnemyMovement>();
     }
 
     void Start()
@@ -19,10 +21,11 @@ public class Health : MonoBehaviour
         CurrentHealth = MaxHealth;
     }
 
-    public void EnemyTakeDamage(int damage)
+    public void EnemyTakeDamage(int damage,  Vector2 hitDirection)
     {
         if(isdead) return;
         CurrentHealth -= damage;
+        enemyMovement.ApplyKnockback(hitDirection);
         if(CurrentHealth <= 0)
         {
             isdead = true;

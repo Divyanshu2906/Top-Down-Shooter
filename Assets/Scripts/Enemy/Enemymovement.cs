@@ -1,8 +1,12 @@
 using NUnit.Framework;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] float knockbackForce = 4f;
+    [SerializeField] float knockbackDuration = 0.12f;
+    bool isKnockedBack;
     AudioSource[] audiosources;
     [SerializeField] float separationRadius = 1.0f;
     [SerializeField] float separationStrength = 0.2f;
@@ -59,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if(player == null || health.isdead) return;
 
-        if (shouldchase)
+        if (shouldchase && !isKnockedBack)
         {
             ChasePlayer();
         }
@@ -88,5 +92,29 @@ public class EnemyMovement : MonoBehaviour
         direction.Normalize();
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
     }
-    
+
+    public void ApplyKnockback(Vector2 direction)
+    {
+        StopAllCoroutines();
+        StartCoroutine(KnockbackCoroutine(direction));
+    }
+
+    IEnumerator KnockbackCoroutine(Vector2 direction)
+    {
+        isKnockedBack = true;
+
+        float timer = 0f;
+
+        while (timer < knockbackDuration)
+        {
+            float strength = Mathf.Lerp(knockbackForce, 0f, timer / knockbackDuration);
+
+            rb.MovePosition(rb.position + direction * strength * Time.fixedDeltaTime);
+
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        isKnockedBack = false;
+    }
 }

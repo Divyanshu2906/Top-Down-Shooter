@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
 
             if(health != null)
             {
-                health.EnemyTakeDamage(damage); //this function originally belongs to health class, the damage is only known to the bullet script
+                health.EnemyTakeDamage(damage, transform.right); //this function originally belongs to health class, the damage is only known to the bullet script
                 Destroy(gameObject);
             }
     }
