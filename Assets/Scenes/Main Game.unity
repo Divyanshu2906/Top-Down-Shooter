@@ -216,7 +216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerhealth
   maxhealth: 100
-  invulnerableduration: 1.5
+  invulnerabilityDuration: 0.5
+  hitFlashDuration: 0.1
 --- !u!1 &325072391
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: a4d1767fbcd0e5d429f38daf6699130c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 451db67980915b64194b3b2f0c0db489, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1605,7 +1606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1314508234
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1714,7 +1715,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: a4d1767fbcd0e5d429f38daf6699130c, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2418,7 +2419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &2003201578
 AudioSource:
   m_ObjectHideFlags: 0
