@@ -4,16 +4,17 @@ public class Health : MonoBehaviour
 {
     AudioSource[] audiosources;
     [SerializeField] int MaxHealth = 100;
+
     int CurrentHealth;
     Animator animator;
     public bool isdead;
-    EnemyMovement enemyMovement;
+
+    EnemySpawner enemySpawner;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         audiosources = GetComponents<AudioSource>();
-        enemyMovement = GetComponent<EnemyMovement>();
     }
 
     void Start()
@@ -21,14 +22,30 @@ public class Health : MonoBehaviour
         CurrentHealth = MaxHealth;
     }
 
-    public void EnemyTakeDamage(int damage,  Vector2 hitDirection)
+    public void SetSpawner(EnemySpawner spawner)
     {
-        if(isdead) return;
+        enemySpawner = spawner;
+    }
+
+    public void EnemyTakeDamage(int damage, Vector2 hitDirection)
+    {
+        if (isdead) return;
+
         CurrentHealth -= damage;
-        enemyMovement.ApplyKnockback(hitDirection);
-        if(CurrentHealth <= 0)
+
+        EnemyMovement enemyMovement = GetComponent<EnemyMovement>();
+
+        if (enemyMovement != null)
+        {
+            enemyMovement.ApplyKnockback(hitDirection);
+        }
+
+        if (CurrentHealth <= 0)
         {
             isdead = true;
+
+            enemySpawner.EnemyDied();
+
             animator.SetTrigger("Death");
             audiosources[1].Play();
         }
