@@ -43,8 +43,10 @@ public class Health : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             isdead = true;
-
-            enemySpawner.EnemyDied();
+            if (enemySpawner != null)
+            {
+                enemySpawner.EnemyDied();
+            }
 
             animator.SetTrigger("Death");
             audiosources[1].Play();

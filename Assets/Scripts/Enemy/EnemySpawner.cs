@@ -3,11 +3,13 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject enemyprefabs;
+    [SerializeField] GameObject rangedenemyprefab;
     [SerializeField] Transform spawnpoints;
     [SerializeField] float spawnrate = 2f;
     [SerializeField] int enemiesperwave = 5;
 
     int currentwave = 1;
+    GameObject selectedenemy;
     int enemiesspawnedthiswave;
 
     float spawntimer;
@@ -38,8 +40,19 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+
+        if (Random.value < 0.5)
+        {
+            selectedenemy = enemyprefabs;
+        }
+        else
+        {
+            selectedenemy = rangedenemyprefab;
+        }
+
+
         GameObject enemy = Instantiate(
-            enemyprefabs,
+            selectedenemy,
             spawnpoints.position,
             spawnpoints.rotation
         );

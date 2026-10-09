@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6398598508135627345}
   - component: {fileID: 6229864893524987084}
   - component: {fileID: 3627633495561847640}
-  - component: {fileID: -8682411466544669292}
+  - component: {fileID: -7978727202588776525}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Enemy bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.8652785, a: 1}
+  m_Color: {r: 1, g: 0.041236196, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -157,7 +157,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &-8682411466544669292
+--- !u!114 &-7978727202588776525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,10 +166,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1508547737474917130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ee1f2b3e77bb1b43985914536af270d, type: 3}
+  m_Script: {fileID: 11500000, guid: f1cc2230a781cc04483b68c5476ddd5c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  MoveSpeed: 20
-  BulletLiftime: 3
-  Impacteffectprefab: {fileID: 9142146071295838133, guid: cb4f74d2b138b7c4dbd7e54c441cbf44, type: 3}
-  damage: 25
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
+  moveSpeed: 10
+  damage: 20
+  lifetime: 3
