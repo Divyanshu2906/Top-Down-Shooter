@@ -1097,11 +1097,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b84c04a33be0747a2a3e049fbf2bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  weaponData: {fileID: 11400000, guid: 462b3e4ccf8f9af44a7219c120db9161, type: 2}
   firepoint: {fileID: 1398037086}
-  BulletPrefab: {fileID: 1508547737474917130, guid: ae7e02dd64493464b9dd8abf687fd16c, type: 3}
-  MagazineSize: 10
-  ReloadTime: 1
-  FireRate: 4
 --- !u!1 &1280619144
 GameObject:
   m_ObjectHideFlags: 0

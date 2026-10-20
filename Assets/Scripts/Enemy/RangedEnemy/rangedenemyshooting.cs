@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class RangedEnemyShooting : MonoBehaviour
@@ -6,22 +7,31 @@ public class RangedEnemyShooting : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] float shootingRange = 8f;
     [SerializeField] float fireRate = 1f;
+    [SerializeField] int baseProjectileDamage = 15;
 
     Transform player;
     Health health;
     float nextFireTime;
+    int projectileDamage = 15;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+
         health = GetComponent<Health>();
     }
 
     void Update()
     {
-        if(health.isdead)
+        if (health == null || health.isdead)
             return;
-        if (player == null)
+
+        if (player == null || firePoint == null)
             return;
 
         float distance = Vector2.Distance(transform.position, player.position);
@@ -29,9 +39,13 @@ public class RangedEnemyShooting : MonoBehaviour
         if (distance <= shootingRange && Time.time >= nextFireTime)
         {
             Shoot();
-
             nextFireTime = Time.time + fireRate;
         }
+    }
+
+    public void SetWave(int wave)
+    {
+        projectileDamage = baseProjectileDamage + (wave - 1) * 2;
     }
 
     void Shoot()
@@ -39,13 +53,19 @@ public class RangedEnemyShooting : MonoBehaviour
         Vector2 direction = player.position - firePoint.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
 
-        Instantiate(
+        GameObject projectile = Instantiate(
             projectilePrefab,
             firePoint.position,
             rotation
         );
+
+        EnemyProjectile enemyProjectile = projectile.GetComponent<EnemyProjectile>();
+
+        if (enemyProjectile != null)
+        {
+            enemyProjectile.SetDamage(projectileDamage);
+        }
     }
 }

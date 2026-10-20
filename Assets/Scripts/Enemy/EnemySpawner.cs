@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,7 +10,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] int enemiesperwave = 5;
 
     int currentwave = 1;
-    GameObject selectedenemy;
     int enemiesspawnedthiswave;
 
     float spawntimer;
@@ -23,36 +23,47 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            if(enemiesspawnedthiswave < enemiesperwave)
+            if (enemiesspawnedthiswave < enemiesperwave)
             {
-            SpawnEnemy();
-            spawntimer = spawnrate;
-            enemiesspawnedthiswave++;    
+                SpawnEnemy();
+                spawntimer = spawnrate;
+                enemiesspawnedthiswave++;
             }
         }
 
-        if(aliveEnemies == 0 && enemiesspawnedthiswave  >= enemiesperwave)
+        if (aliveEnemies == 0 &&
+            enemiesspawnedthiswave >= enemiesperwave)
         {
             currentwave++;
             enemiesspawnedthiswave = 0;
+
+            enemiesperwave = 5 + (currentwave - 1) * 2;
+
+            Debug.Log("Starting Wave: " + currentwave);
+            Debug.Log("Enemies this wave: " + enemiesperwave);
         }
     }
 
     void SpawnEnemy()
     {
+        float rangedChance = Mathf.Min(
+            0.2f + (currentwave - 1) * 0.1f,
+            0.6f
+        );
 
-        if (Random.value < 0.5)
+        GameObject selectedEnemy;
+
+        if (Random.value < rangedChance)
         {
-            selectedenemy = enemyprefabs;
+            selectedEnemy = rangedenemyprefab;
         }
         else
         {
-            selectedenemy = rangedenemyprefab;
+            selectedEnemy = enemyprefabs;
         }
 
-
         GameObject enemy = Instantiate(
-            selectedenemy,
+            selectedEnemy,
             spawnpoints.position,
             spawnpoints.rotation
         );
@@ -60,7 +71,26 @@ public class EnemySpawner : MonoBehaviour
         aliveEnemies++;
 
         Health health = enemy.GetComponent<Health>();
-        health.SetSpawner(this);
+
+        if (health != null)
+        {
+            health.SetSpawner(this);
+            health.SetWave(currentwave);
+        }
+        else
+        {
+            Debug.LogError(
+                "Spawned enemy is missing the Health component!",
+                enemy
+            );
+        }
+
+        RangedEnemyShooting rangedShooting = enemy.GetComponent<RangedEnemyShooting>();
+
+        if (rangedShooting != null)
+        {
+            rangedShooting.SetWave(currentwave);
+        }
     }
 
     public void EnemyDied()

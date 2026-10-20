@@ -1,9 +1,10 @@
+
 using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
-    [SerializeField] int damage = 25;
+    [SerializeField] int damage = 15;
     [SerializeField] float lifetime = 3f;
 
     Rigidbody2D rb;
@@ -16,8 +17,12 @@ public class EnemyProjectile : MonoBehaviour
     void Start()
     {
         rb.linearVelocity = transform.right * moveSpeed;
-
         Destroy(gameObject, lifetime);
+    }
+
+    public void SetDamage(int newDamage)
+    {
+        damage = newDamage;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

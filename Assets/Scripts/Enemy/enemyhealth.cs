@@ -10,11 +10,13 @@ public class Health : MonoBehaviour
     public bool isdead;
 
     EnemySpawner enemySpawner;
+    int basemaxhealth;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         audiosources = GetComponents<AudioSource>();
+        basemaxhealth = MaxHealth;
     }
 
     void Start()
@@ -56,5 +58,10 @@ public class Health : MonoBehaviour
     public void DestroyEnemy()
     {
         Destroy(gameObject);
+    }
+
+    public void SetWave(int wave)
+    {
+        MaxHealth = basemaxhealth + (wave - 1) * 10;
     }
 }

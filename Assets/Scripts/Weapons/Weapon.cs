@@ -3,11 +3,10 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     InputActions inputActions;
+    Bullet bullet;
+    [SerializeField] WeaponData weaponData;
     [SerializeField] Transform firepoint;
-    [SerializeField] GameObject BulletPrefab;
-    [SerializeField] int MagazineSize = 12;
-    [SerializeField] float ReloadTime = 1.5f;
-    [SerializeField] float FireRate = 2f;
+
     int CurrentAmmo;
     bool isReloading;
     float NextFireTime = 0f ; 
@@ -24,7 +23,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        CurrentAmmo = MagazineSize;
+        CurrentAmmo = weaponData.MagazineSize;
     }
 
     void Update()
@@ -35,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     private void HandleReload()
     {
-        if(!isReloading && CurrentAmmo < MagazineSize)
+        if(!isReloading && CurrentAmmo < weaponData.MagazineSize)
         {
             if (inputActions.Player.Reload.triggered)
             {
@@ -56,9 +55,10 @@ public class Weapon : MonoBehaviour
             {
                 if (CurrentAmmo > 0)
                 {
-                    NextFireTime = Time.time + (1f / FireRate);
+                    NextFireTime = Time.time + (1f / weaponData.FireRate);
                     CurrentAmmo--;
-                    Instantiate(BulletPrefab, firepoint.position, firepoint.rotation);
+                    GameObject bulletObject = Instantiate(weaponData.BulletPrefab, firepoint.position, firepoint.rotation);
+                    bulletObject.GetComponent<Bullet>().setdamage(weaponData.Damage);
                 }
 
                 else
@@ -75,8 +75,8 @@ public class Weapon : MonoBehaviour
     {
         Debug.Log("reloading");
         isReloading = true;
-        yield return new WaitForSeconds(ReloadTime);
-        CurrentAmmo = MagazineSize;
+        yield return new WaitForSeconds(weaponData.ReloadTime);
+        CurrentAmmo = weaponData.MagazineSize;
         isReloading = false;
     }
 
