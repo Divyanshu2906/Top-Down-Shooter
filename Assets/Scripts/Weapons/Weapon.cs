@@ -49,7 +49,8 @@ public class Weapon : MonoBehaviour
     private void HandleShooting()
     {
         if (isReloading) return;
-        if (inputActions.Player.Fire.triggered)
+        bool fireinput = weaponData.firemode == weaponfiremode.semiautofire ? inputActions.Player.Fire.triggered : inputActions.Player.Fire.IsPressed();
+        if (fireinput)
         {
             if (Time.time >= NextFireTime)
             {
